@@ -8,7 +8,14 @@ import (
 	"time"
 )
 
-func InitLogger(folder, logfile string) error {
+type Mode uint8
+
+const (
+	Dev  Mode = iota
+	Prod Mode = iota
+)
+
+func InitLogger(folder, logfile string, mode Mode) error {
 	// Create the logs' directory if it does not exist.
 	path, err := os.Getwd()
 	if err != nil {
@@ -27,13 +34,23 @@ func InitLogger(folder, logfile string) error {
 		return fmt.Errorf("failed to create / open log file: %w", err)
 	}
 
+	var cfg zap.Config
+	var encoderCfg zapcore.EncoderConfig
+
+	switch mode {
+	case Dev:
+		cfg = zap.NewDevelopmentConfig()
+		encoderCfg = zap.NewDevelopmentEncoderConfig()
+	case Prod:
+		cfg = zap.NewProductionConfig()
+		encoderCfg = zap.NewProductionEncoderConfig()
+	}
+
 	// Creates the production logger and updates the output targets.
-	cfg := zap.NewProductionConfig()
 	cfg.OutputPaths = append(cfg.OutputPaths, file.Name())
 	cfg.ErrorOutputPaths = append(cfg.ErrorOutputPaths, file.Name())
 
 	// Updates the encoder configuration
-	encoderCfg := zap.NewProductionEncoderConfig()
 	encoderCfg.EncodeTime = func(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
 		enc.AppendString(time.RFC3339)
 	}
