@@ -22,7 +22,7 @@ func InitLogger(folder, logfile string) error {
 	}
 
 	// Creates the log file if it does not exist.
-	file, err := os.OpenFile(path+"/"+folder+logfile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	file, err := os.OpenFile(path+"/"+folder+"/"+logfile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return fmt.Errorf("failed to create / open log file: %w", err)
 	}
