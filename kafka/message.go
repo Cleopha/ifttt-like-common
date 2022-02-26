@@ -1,5 +1,6 @@
 package kafka
 
-type Action struct {
+type Message struct {
 	TaskID string
+	Owner  string
 }
