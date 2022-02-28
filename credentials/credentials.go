@@ -28,6 +28,10 @@ func NewClient(port string) (*Client, error) {
 	}, nil
 }
 
+func (c *Client) Shutdown() error {
+	return c.conn.Close()
+}
+
 func (c *Client) InsertCredential(ctx context.Context, in *protos.InsertCredentialRequest, opts ...grpc.CallOption) (*protos.Credential, error) {
 	return c.clt.InsertCredential(ctx, in, opts...)
 }
