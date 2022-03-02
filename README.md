@@ -3,5 +3,5 @@
 Install the package :
 
 ```bash
-go get github.com/Cleopha/ifttt-like-common@v1.1.2
+go get github.com/Cleopha/ifttt-like-common@v1.1.3
 ```

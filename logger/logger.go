@@ -22,6 +22,10 @@ func InitLogger(folder, logfile string, mode Mode) error {
 		return fmt.Errorf("failed to get current directory's path: %w", err)
 	}
 
+	if path == "/" {
+		path = ""
+	}
+
 	if _, err = os.Stat(path + "/" + folder); os.IsNotExist(err) {
 		if err = os.Mkdir(folder, os.ModePerm); err != nil {
 			return fmt.Errorf("failed to create log's directory: %w", err)
