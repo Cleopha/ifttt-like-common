@@ -13,8 +13,8 @@ type Client struct {
 	clt  protos.CredentialServiceClient
 }
 
-func NewClient(port string) (*Client, error) {
-	conn, err := grpc.Dial(":"+port, grpc.WithTransportCredentials(insecure.NewCredentials()))
+func NewClient(hostname, port string) (*Client, error) {
+	conn, err := grpc.Dial(hostname+":"+port, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return nil, fmt.Errorf("failed to dial: %w", err)
 	}
